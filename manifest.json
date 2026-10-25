@@ -1,0 +1,21 @@
+{
+  "name": "Générateur de Crédence Magique",
+  "short_name": "Crédence",
+  "description": "Créez votre crédence personnalisée avec message secret encodé",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#1e293b",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='96' height='96' fill='%23c14444'/><rect x='96' width='96' height='96' fill='%23456496'/><rect y='96' width='96' height='96' fill='%23779c90'/><rect x='96' y='96' width='96' height='96' fill='%23e2d222'/></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='256' height='256' fill='%23c14444'/><rect x='256' width='256' height='256' fill='%23456496'/><rect y='256' width='256' height='256' fill='%23779c90'/><rect x='256' y='256' width='256' height='256' fill='%23e2d222'/></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}

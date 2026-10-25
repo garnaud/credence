@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1e293b">
+  <title>Générateur de Crédence</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='50' height='50' fill='%23c14444'/><rect x='50' width='50' height='50' fill='%23456496'/><rect y='50' width='50' height='50' fill='%23779c90'/><rect x='50' y='50' width='50' height='50' fill='%23e2d222'/></svg>">
+</head>
+<body>
+  <header>
+    <div class="container header-container">
+      <h1>Crédence Magique</h1>
+      <p class="subtitle">Créez votre crédence personnalisée avec message secret encodé</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="grid-layout">
+      <!-- Panneau de configuration -->
+      <section class="card config-card">
+        <h2>Configuration</h2>
+        
+        <div class="form-group">
+          <label for="message-input">Message à encoder :</label>
+          <input type="text" id="message-input" placeholder="Ex: CHAT, BONJOUR..." value="lucilecamilleapollineraphaelleguillaum" autocomplete="off">
+          <small class="hint">Caractères autorisés : A-Z, 0-9, espace, !, ?, ., ,, -</small>
+          <!-- Indicateur de capacité discret directement sous le champ de saisie -->
+          <div id="capacity-alert" class="alert alert-discreet"></div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col">
+            <label for="largeur-input">Largeur (carreaux) :</label>
+            <input type="number" id="largeur-input" min="1" max="100" value="29">
+          </div>
+          <div class="form-group col">
+            <label for="hauteur-input">Hauteur (carreaux) :</label>
+            <input type="number" id="hauteur-input" min="1" max="100" value="4">
+          </div>
+        </div>
+
+        <!-- Boutons d'action sous les dimensions -->
+        <div class="dimensions-actions-row">
+          <button id="btn-reroll-noise" type="button" class="btn btn-secondary" title="Tirer une nouvelle combinaison de variantes et de fond">Variante</button>
+          <button id="btn-generate-unique-alphabet" type="button" class="btn btn-primary" title="Générer un alphabet sans collision">Générer alphabet</button>
+        </div>
+
+        <!-- Sélecteur des 5 couleurs -->
+        <div class="colors-section">
+          <h3>Palette de couleurs de travail</h3>
+          <div class="color-pickers-grid">
+            <div class="color-picker-item">
+              <label for="color-R">Rouge (R)</label>
+              <input type="color" id="color-R" value="#c14444">
+            </div>
+            <div class="color-picker-item">
+              <label for="color-B">Bleu (B)</label>
+              <input type="color" id="color-B" value="#456496">
+            </div>
+            <div class="color-picker-item">
+              <label for="color-V">Vert (V)</label>
+              <input type="color" id="color-V" value="#779c90">
+            </div>
+            <div class="color-picker-item">
+              <label for="color-J">Jaune (J)</label>
+              <input type="color" id="color-J" value="#e2d222">
+            </div>
+            <div class="color-picker-item">
+              <label for="color-W">Blanc (W)</label>
+              <input type="color" id="color-W" value="#e8d9d9">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Aperçu de la crédence -->
+      <section class="card preview-card">
+        <div class="preview-header">
+          <h2>Aperçu de la crédence</h2>
+          <div class="preview-actions">
+            <button id="btn-download-svg" class="btn btn-outline" title="Télécharger le fichier SVG">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Télécharger SVG
+            </button>
+          </div>
+        </div>
+
+        <div id="svg-container" class="svg-container">
+          <!-- Le SVG généré sera inséré ici en temps réel -->
+        </div>
+
+        <div class="stats-badge" id="stats-badge">
+          <!-- Résumé des cases injecté ici -->
+        </div>
+
+        <div class="color-counts-card">
+          <h3>Répartition des carreaux par couleur</h3>
+          <div class="color-counts-grid" id="color-counts">
+            <!-- Compteurs par couleur injectés dynamiquement -->
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Référence et configuration de l'alphabet -->
+    <section class="card alphabet-card">
+      <div class="alphabet-header">
+        <div class="alphabet-header-title">
+          <h2>Configuration & Table des Symboles</h2>
+          <p class="subtitle">Chaque symbole possède 2 variantes de triplets (3 carreaux). Cliquez sur un carreau pour changer sa couleur. Les doublons sont signalés en temps réel.</p>
+        </div>
+        <div class="alphabet-status-badge" id="alphabet-collision-badge">
+          <!-- Statut des collisions / doublons injecté ici -->
+        </div>
+      </div>
+
+      <div class="alphabet-controls">
+        <div class="alphabet-actions-right">
+          <button id="btn-export-alphabet" type="button" class="btn btn-outline" title="Exporter en fichier JSON">
+            📤 Exporter JSON
+          </button>
+          <label for="import-alphabet-file" class="btn btn-outline file-label" title="Importer un fichier JSON">
+            📥 Importer JSON
+            <input type="file" id="import-alphabet-file" accept=".json" style="display: none;">
+          </label>
+        </div>
+      </div>
+
+      <div class="alphabet-filter-row">
+        <input type="text" id="alphabet-search" placeholder="🔍 Filtrer les symboles (ex: A, B, 1...)" class="alphabet-search-input">
+        <span class="alphabet-help">💡 Astuce : Cliquez directement sur un carreau pour faire défiler la couleur (R → B → V → J → W)</span>
+      </div>
+
+      <div id="alphabet-grid" class="alphabet-grid">
+        <!-- Rempli dynamiquement par JavaScript -->
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-container">
+      <p>Crédence PWA — Utilisable hors-ligne et hébergeable sur GitHub Pages</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
