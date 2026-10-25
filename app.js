@@ -91,11 +91,13 @@ function saveCodeToStorage() {
   }
 }
 
+// Taille fixe d'un carreau en pixels
+const TAILLE_CARREAU = 24;
+
 // Éléments du DOM
 const messageInput = document.getElementById('message-input');
 const largeurInput = document.getElementById('largeur-input');
 const hauteurInput = document.getElementById('hauteur-input');
-const tailleCarreauInput = document.getElementById('taille-carreau');
 const capacityAlert = document.getElementById('capacity-alert');
 const svgContainer = document.getElementById('svg-container');
 const statsBadge = document.getElementById('stats-badge');
@@ -104,11 +106,9 @@ const alphabetGrid = document.getElementById('alphabet-grid');
 const alphabetCollisionBadge = document.getElementById('alphabet-collision-badge');
 const alphabetSearchInput = document.getElementById('alphabet-search');
 
-const btnResetColors = document.getElementById('btn-reset-colors');
 const btnRerollNoise = document.getElementById('btn-reroll-noise');
 const btnDownloadSvg = document.getElementById('btn-download-svg');
 const btnGenerateUniqueAlphabet = document.getElementById('btn-generate-unique-alphabet');
-const btnRestoreDefaultAlphabet = document.getElementById('btn-restore-default-alphabet');
 const btnExportAlphabet = document.getElementById('btn-export-alphabet');
 const importAlphabetFile = document.getElementById('import-alphabet-file');
 
@@ -209,17 +209,6 @@ function generateUniqueAlphabet() {
 
   saveCodeToStorage();
   render();
-}
-
-/**
- * Rétablit l'alphabet par défaut (historique)
- */
-function restoreDefaultAlphabet() {
-  if (confirm("Voulez-vous restaurer l'alphabet d'origine ? Vos personnalisations seront remplacées.")) {
-    currentCode = JSON.parse(JSON.stringify(DEFAULT_CODE));
-    saveCodeToStorage();
-    render();
-  }
 }
 
 /**
@@ -451,7 +440,7 @@ function render() {
   const rawMessage = messageInput.value.toUpperCase();
   const largeur = Math.max(1, parseInt(largeurInput.value, 10) || 29);
   const hauteur = Math.max(1, parseInt(hauteurInput.value, 10) || 4);
-  const tailleCarreau = Math.max(5, parseInt(tailleCarreauInput.value, 10) || 20);
+  const tailleCarreau = TAILLE_CARREAU;
 
   const colors = getCurrentColors();
   const totalTiles = largeur * hauteur;
@@ -568,18 +557,8 @@ function downloadSvg() {
   URL.revokeObjectURL(url);
 }
 
-// Réinitialisation des couleurs
-function resetColors() {
-  for (const [key, defaultVal] of Object.entries(DEFAULT_COLORS)) {
-    if (colorInputs[key]) {
-      colorInputs[key].value = defaultVal;
-    }
-  }
-  render();
-}
-
 // Écouteurs d'événements pour la mise à jour en temps réel
-[messageInput, largeurInput, hauteurInput, tailleCarreauInput].forEach((input) => {
+[messageInput, largeurInput, hauteurInput].forEach((input) => {
   input.addEventListener('input', render);
 });
 
@@ -591,11 +570,9 @@ alphabetSearchInput.addEventListener('input', () => {
   renderAlphabetTable(getCurrentColors(), messageInput.value);
 });
 
-btnResetColors.addEventListener('click', resetColors);
 btnRerollNoise.addEventListener('click', rerollAllRandomness);
 btnDownloadSvg.addEventListener('click', downloadSvg);
 btnGenerateUniqueAlphabet.addEventListener('click', generateUniqueAlphabet);
-btnRestoreDefaultAlphabet.addEventListener('click', restoreDefaultAlphabet);
 btnExportAlphabet.addEventListener('click', exportAlphabetJson);
 importAlphabetFile.addEventListener('change', importAlphabetJson);
 
