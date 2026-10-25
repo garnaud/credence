@@ -29,7 +29,11 @@ Puis ouvrez `http://localhost:8000` dans votre navigateur.
 
 ## Déploiement sur GitHub Pages
 
-1. Poussez les fichiers sur votre dépôt GitHub (`master` ou `main`).
+Un workflow GitHub Actions automatisé est configuré dans `.github/workflows/deploy.yml`.
+
+Pour l'activer sur votre dépôt :
+1. Poussez votre code sur GitHub (`git add .`, `git commit -m "feat: config github pages"`, `git push`).
 2. Rendez-vous dans **Settings** > **Pages** de votre dépôt GitHub.
-3. Dans **Build and deployment** > **Branch**, sélectionnez la branche `master` (ou `main`), dossier `/ (root)`, puis cliquez sur **Save**.
-4. L'application sera accessible gratuitement en ligne à l'adresse `https://<votre-pseudo>.github.io/<nom-du-repo>/`.
+3. Dans **Build and deployment** > **Source**, sélectionnez **GitHub Actions**.
+4. Le workflow se lance automatiquement à chaque push sur `main` et déploie le site sur :
+   `https://garnaud.github.io/credence/`
