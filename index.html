@@ -81,13 +81,11 @@
         <div class="preview-header">
           <h2>Aperçu de la crédence</h2>
           <div class="preview-actions">
-            <button id="btn-download-svg" class="btn btn-outline" title="Télécharger le fichier SVG">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                <polyline points="7 10 12 15 17 10"/>
-                <line x1="12" y1="15" x2="12" y2="3"/>
-              </svg>
-              Télécharger SVG
+            <button id="btn-download-png" class="btn btn-outline" title="Télécharger l'image PNG de la crédence">
+              🖼️ Télécharger PNG
+            </button>
+            <button id="btn-download-pdf" class="btn btn-outline" title="Télécharger le document PDF de la crédence">
+              📄 Télécharger PDF
             </button>
           </div>
         </div>
@@ -123,11 +121,17 @@
 
       <div class="alphabet-controls">
         <div class="alphabet-actions-right">
+          <button id="btn-export-alphabet-png" type="button" class="btn btn-outline" title="Exporter la table de l'alphabet en image PNG">
+            🖼️ Alphabet PNG
+          </button>
+          <button id="btn-export-alphabet-pdf" type="button" class="btn btn-outline" title="Exporter la table de l'alphabet en document PDF">
+            📄 Alphabet PDF
+          </button>
           <button id="btn-export-alphabet" type="button" class="btn btn-outline" title="Exporter en fichier JSON">
-            📤 Exporter JSON
+            📤 JSON
           </button>
           <label for="import-alphabet-file" class="btn btn-outline file-label" title="Importer un fichier JSON">
-            📥 Importer JSON
+            📥 Importer
             <input type="file" id="import-alphabet-file" accept=".json" style="display: none;">
           </label>
         </div>

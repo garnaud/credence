@@ -107,8 +107,11 @@ const alphabetCollisionBadge = document.getElementById('alphabet-collision-badge
 const alphabetSearchInput = document.getElementById('alphabet-search');
 
 const btnRerollNoise = document.getElementById('btn-reroll-noise');
-const btnDownloadSvg = document.getElementById('btn-download-svg');
+const btnDownloadPng = document.getElementById('btn-download-png');
+const btnDownloadPdf = document.getElementById('btn-download-pdf');
 const btnGenerateUniqueAlphabet = document.getElementById('btn-generate-unique-alphabet');
+const btnExportAlphabetPng = document.getElementById('btn-export-alphabet-png');
+const btnExportAlphabetPdf = document.getElementById('btn-export-alphabet-pdf');
 const btnExportAlphabet = document.getElementById('btn-export-alphabet');
 const importAlphabetFile = document.getElementById('import-alphabet-file');
 
@@ -537,24 +540,277 @@ function render() {
 }
 
 /**
- * Téléchargement du fichier SVG généré
+ * Génère un document PDF 1.4 valide encapsulant une image JPEG
  */
-function downloadSvg() {
+function createPdfBlobFromJpeg(jpegBytes, imgW, imgH) {
+  const isLandscape = imgW > imgH;
+  const pageW = isLandscape ? 841.89 : 595.28;
+  const pageH = isLandscape ? 595.28 : 841.89;
+  const margin = 36; // Marges de 0.5 pouce
+
+  const maxW = pageW - margin * 2;
+  const maxH = pageH - margin * 2;
+
+  const ratio = Math.min(maxW / imgW, maxH / imgH);
+  const drawW = Math.round(imgW * ratio);
+  const drawH = Math.round(imgH * ratio);
+  const drawX = Math.round((pageW - drawW) / 2);
+  const drawY = Math.round((pageH - drawH) / 2);
+
+  const contentStream = `q ${drawW} 0 0 ${drawH} ${drawX} ${drawY} cm /Im0 Do Q`;
+  const header = '%PDF-1.4\n';
+  const body = [];
+  const offsets = [];
+
+  function addObj(str, streamBytes = null) {
+    let currentLength = header.length;
+    for (const b of body) {
+      currentLength += (typeof b === 'string' ? new TextEncoder().encode(b).length : b.byteLength);
+    }
+    offsets.push(currentLength);
+    body.push(str + '\n');
+    if (streamBytes) {
+      body.push(streamBytes);
+      body.push('\nendstream\nendobj\n');
+    } else {
+      body.push('endobj\n');
+    }
+  }
+
+  addObj('1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>');
+  addObj('2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>');
+  addObj(`3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageW} ${pageH}] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>`);
+  addObj(`4 0 obj\n<< /Type /XObject /Subtype /Image /Width ${imgW} /Height ${imgH} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpegBytes.byteLength} >>\nstream\n`, jpegBytes);
+  addObj(`5 0 obj\n<< /Length ${new TextEncoder().encode(contentStream).length} >>\nstream\n${contentStream}\nendstream\nendobj\n`);
+
+  let currentLength = header.length;
+  for (const b of body) {
+    currentLength += (typeof b === 'string' ? new TextEncoder().encode(b).length : b.byteLength);
+  }
+  const startxref = currentLength;
+
+  let xref = `xref\n0 ${offsets.length + 1}\n0000000000 65535 f \n`;
+  for (const off of offsets) {
+    xref += off.toString().padStart(10, '0') + ' 00000 n \n';
+  }
+  const trailer = `trailer\n<< /Size ${offsets.length + 1} /Root 1 0 R >>\nstartxref\n${startxref}\n%%EOF\n`;
+
+  return new Blob([header, ...body, xref, trailer], { type: 'application/pdf' });
+}
+
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function canvasToPdfBlob(canvas) {
+  const dataUrl = canvas.toDataURL('image/jpeg', 0.95);
+  const base64 = dataUrl.split(',')[1];
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+  return createPdfBlobFromJpeg(bytes, canvas.width, canvas.height);
+}
+
+/**
+ * Export de la crédence en PNG ou PDF
+ */
+function exportCredence(format) {
   const svgElement = svgContainer.querySelector('svg');
   if (!svgElement) return;
 
-  const serializer = new XMLSerializer();
-  const source = '<?xml version="1.0" encoding="utf-8" standalone="no"?>\r\n' + serializer.serializeToString(svgElement);
-  const blob = new Blob([source], { type: 'image/svg+xml;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
+  const svgStr = new XMLSerializer().serializeToString(svgElement);
+  const svgBlob = new Blob([svgStr], { type: 'image/svg+xml;charset=utf-8' });
+  const url = URL.createObjectURL(svgBlob);
+  const img = new Image();
 
-  const downloadLink = document.createElement('a');
-  downloadLink.href = url;
-  downloadLink.download = `credence_${messageInput.value || 'sans-titre'}.svg`;
-  document.body.appendChild(downloadLink);
-  downloadLink.click();
-  document.body.removeChild(downloadLink);
-  URL.revokeObjectURL(url);
+  img.onload = () => {
+    const scale = 3;
+    const w = (parseInt(svgElement.getAttribute('width'), 10) || 300) * scale;
+    const h = (parseInt(svgElement.getAttribute('height'), 10) || 100) * scale;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext('2d');
+
+    // Fond blanc
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, w, h);
+    ctx.drawImage(img, 0, 0, w, h);
+    URL.revokeObjectURL(url);
+
+    const safeName = (messageInput.value.trim() || 'credence').toLowerCase().replace(/[^a-z0-9]/g, '_');
+
+    if (format === 'png') {
+      canvas.toBlob((blob) => {
+        downloadBlob(blob, `credence_${safeName}.png`);
+      }, 'image/png');
+    } else if (format === 'pdf') {
+      const pdfBlob = canvasToPdfBlob(canvas);
+      downloadBlob(pdfBlob, `credence_${safeName}.pdf`);
+    }
+  };
+  img.src = url;
+}
+
+/**
+ * Export de l'alphabet complet en PNG ou PDF (fiche A4 imprimable)
+ */
+function exportAlphabet(format) {
+  const colors = getCurrentColors();
+  const canvas = document.createElement('canvas');
+  // Format A4 portrait à 150 DPI
+  canvas.width = 1240;
+  canvas.height = 1754;
+  const ctx = canvas.getContext('2d');
+
+  // Fond blanc
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // En-tête
+  ctx.fillStyle = '#0f172a';
+  ctx.font = 'bold 30px sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillText('Table de correspondance des symboles - Crédence Magique', 50, 65);
+
+  ctx.fillStyle = '#475569';
+  ctx.font = '15px sans-serif';
+  ctx.fillText('Chaque symbole possède 2 variantes de triplets (3 carreaux colorés)', 50, 95);
+
+  // Légende des 5 couleurs
+  const colorLegend = [
+    { key: 'R', label: 'Rouge (R)', hex: colors['R'] },
+    { key: 'B', label: 'Bleu (B)', hex: colors['B'] },
+    { key: 'V', label: 'Vert (V)', hex: colors['V'] },
+    { key: 'J', label: 'Jaune (J)', hex: colors['J'] },
+    { key: 'W', label: 'Blanc (W)', hex: colors['W'] },
+  ];
+
+  let legendX = 50;
+  ctx.font = '13px sans-serif';
+  colorLegend.forEach((item) => {
+    ctx.fillStyle = item.hex;
+    ctx.fillRect(legendX, 115, 18, 18);
+    ctx.strokeStyle = 'rgba(0,0,0,0.4)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(legendX, 115, 18, 18);
+
+    ctx.fillStyle = '#0f172a';
+    ctx.fillText(item.label, legendX + 26, 129);
+    legendX += 160;
+  });
+
+  // Ligne de séparation
+  ctx.strokeStyle = '#e2e8f0';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(50, 148);
+  ctx.lineTo(1190, 148);
+  ctx.stroke();
+
+  // Grille des 42 symboles (6 colonnes × 7 lignes)
+  const symbols = Object.keys(currentCode);
+  const colWidth = 190;
+  const rowHeight = 210;
+  const startX = 50;
+  const startY = 165;
+
+  symbols.forEach((char, index) => {
+    const col = index % 6;
+    const row = Math.floor(index / 6);
+    const cellX = startX + col * colWidth + 6;
+    const cellY = startY + row * rowHeight;
+    const cellW = 178;
+    const cellH = 195;
+
+    // Cadre de la cellule
+    ctx.fillStyle = '#f8fafc';
+    ctx.fillRect(cellX, cellY, cellW, cellH);
+    ctx.strokeStyle = '#cbd5e1';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(cellX, cellY, cellW, cellH);
+
+    // Titre du symbole
+    ctx.fillStyle = '#0f172a';
+    ctx.font = 'bold 24px sans-serif';
+    ctx.textAlign = 'center';
+    const displayChar = char === ' ' ? '␣ Espace' : char;
+    ctx.fillText(displayChar, cellX + cellW / 2, cellY + 36);
+
+    const variants = currentCode[char] || [];
+    const tileSize = 28;
+    const tileGap = 4;
+    const startTileX = cellX + 38;
+
+    // Variante 1
+    const v1Y = cellY + 65;
+    ctx.font = 'bold 13px sans-serif';
+    ctx.fillStyle = '#64748b';
+    ctx.textAlign = 'left';
+    ctx.fillText('v1', cellX + 12, v1Y + 19);
+
+    if (variants[0]) {
+      variants[0].forEach((colorKey, tIdx) => {
+        const tx = startTileX + tIdx * (tileSize + tileGap);
+        ctx.fillStyle = colors[colorKey] || '#999';
+        ctx.fillRect(tx, v1Y, tileSize, tileSize);
+        ctx.strokeStyle = 'rgba(0,0,0,0.4)';
+        ctx.strokeRect(tx, v1Y, tileSize, tileSize);
+
+        ctx.fillStyle = getContrastTextColor(colorKey);
+        ctx.font = 'bold 13px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(colorKey, tx + tileSize / 2, v1Y + 19);
+      });
+    }
+
+    // Variante 2
+    const v2Y = cellY + 120;
+    ctx.font = 'bold 13px sans-serif';
+    ctx.fillStyle = '#64748b';
+    ctx.textAlign = 'left';
+    ctx.fillText('v2', cellX + 12, v2Y + 19);
+
+    if (variants[1]) {
+      variants[1].forEach((colorKey, tIdx) => {
+        const tx = startTileX + tIdx * (tileSize + tileGap);
+        ctx.fillStyle = colors[colorKey] || '#999';
+        ctx.fillRect(tx, v2Y, tileSize, tileSize);
+        ctx.strokeStyle = 'rgba(0,0,0,0.4)';
+        ctx.strokeRect(tx, v2Y, tileSize, tileSize);
+
+        ctx.fillStyle = getContrastTextColor(colorKey);
+        ctx.font = 'bold 13px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(colorKey, tx + tileSize / 2, v2Y + 19);
+      });
+    }
+  });
+
+  // Pied de page
+  ctx.fillStyle = '#94a3b8';
+  ctx.font = '12px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('Crédence Magique — https://garnaud.github.io/credence/', canvas.width / 2, 1720);
+
+  if (format === 'png') {
+    canvas.toBlob((blob) => {
+      downloadBlob(blob, 'alphabet_credence.png');
+    }, 'image/png');
+  } else if (format === 'pdf') {
+    const pdfBlob = canvasToPdfBlob(canvas);
+    downloadBlob(pdfBlob, 'alphabet_credence.pdf');
+  }
 }
 
 // Écouteurs d'événements pour la mise à jour en temps réel
@@ -571,8 +827,11 @@ alphabetSearchInput.addEventListener('input', () => {
 });
 
 btnRerollNoise.addEventListener('click', rerollAllRandomness);
-btnDownloadSvg.addEventListener('click', downloadSvg);
+btnDownloadPng.addEventListener('click', () => exportCredence('png'));
+btnDownloadPdf.addEventListener('click', () => exportCredence('pdf'));
 btnGenerateUniqueAlphabet.addEventListener('click', generateUniqueAlphabet);
+btnExportAlphabetPng.addEventListener('click', () => exportAlphabet('png'));
+btnExportAlphabetPdf.addEventListener('click', () => exportAlphabet('pdf'));
 btnExportAlphabet.addEventListener('click', exportAlphabetJson);
 importAlphabetFile.addEventListener('change', importAlphabetJson);
 
