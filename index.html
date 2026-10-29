@@ -48,27 +48,33 @@
           <button id="btn-generate-unique-alphabet" type="button" class="btn btn-primary" title="Générer un alphabet sans collision">Générer alphabet</button>
         </div>
 
-        <!-- Sélecteur des 5 couleurs -->
+        <!-- Sélecteur des couleurs et mode 4/5 couleurs -->
         <div class="colors-section">
-          <h3>Palette de couleurs de travail</h3>
-          <div class="color-pickers-grid">
-            <div class="color-picker-item">
+          <div class="colors-header">
+            <h3>Palette de couleurs</h3>
+            <div class="color-mode-toggle" id="color-mode-toggle">
+              <button type="button" class="mode-btn active" data-mode="5" title="Utiliser 5 couleurs (125 combinaisons, 0 collision)">5 couleurs</button>
+              <button type="button" class="mode-btn" data-mode="4" title="Utiliser 4 couleurs (sans blanc)">4 couleurs</button>
+            </div>
+          </div>
+          <div class="color-pickers-grid" id="color-pickers-grid">
+            <div class="color-picker-item" data-color="R">
               <label for="color-R">Rouge (R)</label>
               <input type="color" id="color-R" value="#c14444">
             </div>
-            <div class="color-picker-item">
+            <div class="color-picker-item" data-color="B">
               <label for="color-B">Bleu (B)</label>
               <input type="color" id="color-B" value="#456496">
             </div>
-            <div class="color-picker-item">
+            <div class="color-picker-item" data-color="V">
               <label for="color-V">Vert (V)</label>
               <input type="color" id="color-V" value="#779c90">
             </div>
-            <div class="color-picker-item">
+            <div class="color-picker-item" data-color="J">
               <label for="color-J">Jaune (J)</label>
               <input type="color" id="color-J" value="#e2d222">
             </div>
-            <div class="color-picker-item">
+            <div class="color-picker-item" data-color="W" id="color-picker-W">
               <label for="color-W">Blanc (W)</label>
               <input type="color" id="color-W" value="#e8d9d9">
             </div>
@@ -81,11 +87,14 @@
         <div class="preview-header">
           <h2>Aperçu de la crédence</h2>
           <div class="preview-actions">
+            <button id="btn-share-config" class="btn btn-primary" title="Copier un lien de partage avec cette configuration complète">
+              🔗 Partager
+            </button>
             <button id="btn-download-png" class="btn btn-outline" title="Télécharger l'image PNG de la crédence">
-              🖼️ Télécharger PNG
+              🖼️ PNG
             </button>
             <button id="btn-download-pdf" class="btn btn-outline" title="Télécharger le document PDF de la crédence">
-              📄 Télécharger PDF
+              📄 PDF
             </button>
           </div>
         </div>
@@ -153,6 +162,8 @@
       <p>Crédence PWA — Utilisable hors-ligne et hébergeable sur GitHub Pages</p>
     </div>
   </footer>
+
+  <div id="toast" class="toast" role="alert" aria-live="polite"></div>
 
   <script src="app.js"></script>
 </body>

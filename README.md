@@ -4,17 +4,20 @@ Application web progressive (PWA) permettant de concevoir des crédences personn
 
 ## Fonctionnalités
 
-- **Encodage secret :** Chaque lettre ou symbole est représenté par un trio de carreaux colorés avec deux variantes au choix.
+- **Option 4 ou 5 couleurs :**
+  - **Mode 5 couleurs (recommandé) :** 125 combinaisons possibles, garantissant 0 collision pour les 84 triplets de l'alphabet.
+  - **Mode 4 couleurs (historique) :** Rouge, Bleu, Vert, Jaune (sans blanc) pour ceux qui préfèrent une palette resserrée.
+- **Lien de partage universel :** Bouton « 🔗 Partager » pour copier en 1 clic une URL encodant l'intégralité de votre configuration (message secret, dimensions, palette et alphabet personnalisé). N'importe qui ouvrant ce lien retrouve instantanément votre crédence identique.
 - **Alphabet 100 % configurable :**
-  - **Générateur sans collision :** bouton pour générer instantanément un alphabet avec 84 triplets uniques (0 collision garantie parmi les 5 couleurs).
-  - **Édition par clic :** cliquez directement sur n'importe quel carreau d'un triplet pour faire défiler la couleur (R → B → V → J → W).
-  - **Détecteur de doublons en temps réel :** avertissement visuel immédiat si un triplet est déjà attribué à une autre lettre/variante.
+  - **Générateur sans collision :** bouton pour générer instantanément un alphabet optimisé.
+  - **Édition par clic :** cliquez directement sur n'importe quel carreau pour faire défiler la couleur.
+  - **Détecteur de doublons en temps réel :** avertissement visuel immédiat si un triplet est déjà attribué.
   - **Sauvegarde & Partage :** mémorisation automatique dans le navigateur (`localStorage`) et boutons d'export/import au format JSON.
-- **5 Couleurs personnalisables :** Sélecteurs de couleur pour le Rouge (R), Bleu (B), Vert (V), Jaune (J) et Blanc (W).
+- **Couleurs personnalisables :** Sélecteurs de couleur pour chaque teinte de la palette.
 - **Compteur de carreaux par couleur :** Décompte dynamique des carreaux et pourcentages pour chaque couleur présente dans la crédence.
-- **Rendu en temps réel :** La crédence SVG et la table de l'alphabet s'actualisent instantanément lors de la frappe ou du changement de couleur.
-- **Contrôle de capacité visuel :** Avertissement immédiat si le message est plus long ou plus court que la grille.
-- **Téléchargement SVG :** Export direct du fichier SVG prêt pour l'impression ou la fabrication.
+- **Rendu en temps réel :** La crédence et la table de l'alphabet s'actualisent instantanément lors de la frappe ou du changement de couleur.
+- **Contrôle de capacité visuel :** Avertissement discret sous le message si celui-ci est plus long ou plus court que la grille.
+- **Export haute résolution :** Téléchargement direct en image PNG ou document PDF A4 prêt pour l'impression.
 - **PWA & Offline :** Installable sur smartphone / ordinateur et utilisable hors-ligne via Service Worker.
 
 ## Tester en local

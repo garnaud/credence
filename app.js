@@ -1,59 +1,62 @@
 /**
- * Table de correspondance par défaut (alphabet aléatoire garanti 0 collision parmi les 5 couleurs).
- * 42 symboles (A-Z, 0-9 et ponctuations) codés par 84 triplets uniques.
+ * Table de correspondance par défaut (alphabet d'origine).
+ * 42 symboles (A-Z, 0-9 et ponctuations).
  */
 const DEFAULT_CODE = {
   // Lettres majuscules
-  'A': [['R', 'V', 'R'], ['J', 'V', 'V']],
-  'B': [['J', 'W', 'W'], ['W', 'J', 'J']],
-  'C': [['J', 'W', 'B'], ['B', 'B', 'V']],
-  'D': [['J', 'W', 'V'], ['J', 'J', 'R']],
-  'E': [['W', 'R', 'R'], ['W', 'V', 'J']],
-  'F': [['B', 'W', 'W'], ['J', 'B', 'V']],
-  'G': [['J', 'J', 'B'], ['B', 'B', 'W']],
-  'H': [['R', 'J', 'V'], ['V', 'J', 'R']],
-  'I': [['J', 'V', 'R'], ['W', 'R', 'B']],
-  'J': [['V', 'R', 'J'], ['V', 'W', 'B']],
-  'K': [['R', 'B', 'W'], ['V', 'V', 'W']],
-  'L': [['W', 'R', 'V'], ['W', 'V', 'V']],
-  'M': [['R', 'B', 'J'], ['R', 'R', 'V']],
-  'N': [['J', 'B', 'B'], ['V', 'W', 'J']],
-  'O': [['B', 'R', 'V'], ['J', 'B', 'J']],
-  'P': [['R', 'W', 'V'], ['V', 'R', 'W']],
-  'Q': [['B', 'J', 'J'], ['V', 'R', 'V']],
-  'R': [['V', 'J', 'W'], ['B', 'J', 'B']],
-  'S': [['V', 'W', 'R'], ['B', 'V', 'B']],
-  'T': [['V', 'V', 'J'], ['B', 'J', 'R']],
-  'U': [['V', 'V', 'B'], ['V', 'B', 'V']],
-  'V': [['J', 'R', 'W'], ['R', 'W', 'J']],
-  'W': [['V', 'J', 'B'], ['V', 'J', 'J']],
-  'X': [['R', 'W', 'W'], ['B', 'J', 'V']],
-  'Y': [['W', 'R', 'J'], ['W', 'J', 'B']],
-  'Z': [['B', 'R', 'R'], ['R', 'B', 'V']],
+  'A': [['R', 'B', 'V'], ['J', 'R', 'B']],
+  'B': [['B', 'V', 'J'], ['V', 'J', 'R']],
+  'C': [['V', 'J', 'B'], ['J', 'B', 'V']],
+  'D': [['R', 'V', 'J'], ['B', 'R', 'V']],
+  'E': [['J', 'R', 'V'], ['V', 'B', 'J']],
+  'F': [['B', 'J', 'R'], ['R', 'V', 'B']],
+  'G': [['V', 'B', 'R'], ['J', 'V', 'J']],
+  'H': [['R', 'J', 'B'], ['B', 'V', 'R']],
+  'I': [['J', 'B', 'V'], ['V', 'R', 'J']],
+  'J': [['B', 'R', 'J'], ['R', 'V', 'B']],
+  'K': [['V', 'J', 'R'], ['J', 'B', 'V']],
+  'L': [['R', 'B', 'J'], ['B', 'J', 'V']],
+  'M': [['J', 'V', 'R'], ['V', 'R', 'B']],
+  'N': [['B', 'V', 'J'], ['R', 'J', 'V']],
+  'O': [['V', 'R', 'B'], ['J', 'B', 'R']],
+  'P': [['R', 'J', 'V'], ['B', 'V', 'J']],
+  'Q': [['J', 'B', 'R'], ['V', 'R', 'J']],
+  'R': [['B', 'V', 'R'], ['R', 'J', 'B']],
+  'S': [['V', 'J', 'B'], ['J', 'R', 'V']],
+  'T': [['R', 'V', 'J'], ['B', 'J', 'R']],
+  'U': [['J', 'R', 'B'], ['V', 'B', 'J']],
+  'V': [['B', 'J', 'V'], ['R', 'V', 'R']],
+  'W': [['V', 'R', 'J'], ['J', 'B', 'V']],
+  'X': [['R', 'B', 'J'], ['B', 'V', 'R']],
+  'Y': [['J', 'V', 'B'], ['V', 'R', 'J']],
+  'Z': [['B', 'R', 'V'], ['R', 'J', 'V']],
 
   // Chiffres
-  '0': [['V', 'B', 'J'], ['J', 'J', 'W']],
-  '1': [['R', 'J', 'W'], ['V', 'R', 'B']],
-  '2': [['W', 'W', 'V'], ['B', 'J', 'W']],
-  '3': [['R', 'R', 'J'], ['W', 'B', 'V']],
-  '4': [['J', 'R', 'R'], ['J', 'R', 'B']],
-  '5': [['B', 'V', 'J'], ['B', 'W', 'J']],
-  '6': [['B', 'V', 'W'], ['R', 'V', 'B']],
-  '7': [['J', 'R', 'V'], ['R', 'J', 'B']],
-  '8': [['V', 'V', 'R'], ['R', 'B', 'B']],
-  '9': [['B', 'V', 'R'], ['B', 'W', 'B']],
+  '0': [['R', 'R', 'R'], ['B', 'B', 'B']],
+  '1': [['R', 'R', 'B'], ['B', 'B', 'R']],
+  '2': [['R', 'B', 'R'], ['B', 'R', 'B']],
+  '3': [['B', 'R', 'R'], ['R', 'B', 'B']],
+  '4': [['V', 'V', 'V'], ['J', 'J', 'J']],
+  '5': [['V', 'V', 'J'], ['J', 'J', 'V']],
+  '6': [['V', 'J', 'V'], ['J', 'V', 'J']],
+  '7': [['J', 'V', 'V'], ['V', 'J', 'J']],
+  '8': [['R', 'V', 'J'], ['B', 'J', 'V']],
+  '9': [['J', 'R', 'V'], ['V', 'B', 'J']],
 
   // Symboles
-  ' ': [['B', 'W', 'V'], ['R', 'V', 'J']],
-  '!': [['V', 'R', 'R'], ['W', 'B', 'R']],
-  '?': [['W', 'V', 'W'], ['W', 'W', 'J']],
-  '.': [['W', 'R', 'W'], ['R', 'W', 'R']],
-  ',': [['J', 'V', 'J'], ['B', 'W', 'R']],
-  '-': [['W', 'B', 'J'], ['R', 'W', 'B']],
+  ' ': [['R', 'B', 'R'], ['B', 'R', 'B']],
+  '!': [['J', 'J', 'R'], ['R', 'J', 'J']],
+  '?': [['V', 'V', 'B'], ['B', 'V', 'V']],
+  '.': [['R', 'J', 'V'], ['V', 'J', 'R']],
+  ',': [['B', 'V', 'J'], ['J', 'V', 'B']],
+  '-': [['R', 'B', 'J'], ['J', 'B', 'R']],
 };
 
-// Les 5 couleurs de travail
-const COLOR_KEYS = ['R', 'B', 'V', 'J', 'W'];
+// Liste ordonnée immuable des 42 symboles pour la sérialisation
+const ORDERED_SYMBOLS = Object.keys(DEFAULT_CODE);
+
+// Toutes les couleurs possibles
+const ALL_COLOR_KEYS = ['R', 'B', 'V', 'J', 'W'];
 
 // Couleurs par défaut (code hexadécimal issu des RGB fournis)
 const DEFAULT_COLORS = {
@@ -64,7 +67,24 @@ const DEFAULT_COLORS = {
   'W': '#e8d9d9', // Blanc: 232, 217, 217
 };
 
-const STORAGE_KEY = 'credence_custom_code_v3';
+const STORAGE_KEY = 'credence_custom_code_v4';
+const STORAGE_MODE_KEY = 'credence_color_mode_v4';
+
+// Mode de couleurs actif (4 ou 5)
+let currentColorMode = (() => {
+  try {
+    const savedMode = localStorage.getItem(STORAGE_MODE_KEY);
+    if (savedMode === '4') return 4;
+  } catch (e) {
+    // ignorer
+  }
+  return 5;
+})();
+
+// Renvoie la liste des couleurs actives selon le mode choisi
+function getActiveColorKeys() {
+  return currentColorMode === 4 ? ['R', 'B', 'V', 'J'] : ['R', 'B', 'V', 'J', 'W'];
+}
 
 // Chargement de l'alphabet actuel (persistance localStorage ou par défaut)
 let currentCode = (() => {
@@ -86,6 +106,7 @@ let currentCode = (() => {
 function saveCodeToStorage() {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(currentCode));
+    localStorage.setItem(STORAGE_MODE_KEY, currentColorMode.toString());
   } catch (e) {
     console.warn('Échec de la sauvegarde dans localStorage', e);
   }
@@ -105,8 +126,12 @@ const colorCountsContainer = document.getElementById('color-counts');
 const alphabetGrid = document.getElementById('alphabet-grid');
 const alphabetCollisionBadge = document.getElementById('alphabet-collision-badge');
 const alphabetSearchInput = document.getElementById('alphabet-search');
+const colorPickersGrid = document.getElementById('color-pickers-grid');
+const colorPickerW = document.getElementById('color-picker-W');
+const modeButtons = document.querySelectorAll('.mode-btn');
 
 const btnRerollNoise = document.getElementById('btn-reroll-noise');
+const btnShareConfig = document.getElementById('btn-share-config');
 const btnDownloadPng = document.getElementById('btn-download-png');
 const btnDownloadPdf = document.getElementById('btn-download-pdf');
 const btnGenerateUniqueAlphabet = document.getElementById('btn-generate-unique-alphabet');
@@ -127,6 +152,55 @@ const colorInputs = {
 let messageVariantsCache = [];
 let noiseColorsCache = [];
 let lastMessage = '';
+
+/**
+ * Affiche une notification flottante (Toast)
+ */
+let toastTimeout = null;
+function showToast(message, duration = 3000) {
+  const toast = document.getElementById('toast');
+  if (!toast) return;
+  toast.textContent = message;
+  toast.classList.add('show');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => {
+    toast.classList.remove('show');
+  }, duration);
+}
+
+/**
+ * Configure le mode 4 ou 5 couleurs
+ */
+function setColorMode(mode, triggerRender = true) {
+  currentColorMode = mode === 4 ? 4 : 5;
+
+  modeButtons.forEach((btn) => {
+    btn.classList.toggle('active', parseInt(btn.dataset.mode, 10) === currentColorMode);
+  });
+
+  if (colorPickerW) {
+    colorPickerW.classList.toggle('hidden', currentColorMode === 4);
+  }
+  if (colorPickersGrid) {
+    colorPickersGrid.classList.toggle('mode-4', currentColorMode === 4);
+  }
+
+  // Si on passe en mode 4 couleurs, remplacer les W résiduels par R
+  if (currentColorMode === 4) {
+    for (const char of Object.keys(currentCode)) {
+      currentCode[char] = currentCode[char].map((triplet) =>
+        triplet.map((c) => (c === 'W' ? 'R' : c))
+      );
+    }
+  }
+
+  saveCodeToStorage();
+  if (triggerRender) {
+    noiseColorsCache = [];
+    updateNoiseCache(300);
+    render();
+  }
+}
 
 /**
  * Récupère les couleurs actuelles depuis les color pickers
@@ -182,17 +256,18 @@ function detectCollisions(code) {
 }
 
 /**
- * Génère automatiquement un alphabet sans AUCUNE collision en utilisant les 5 couleurs.
- * 5^3 = 125 combinaisons. On élimine les 5 triplets uniformes (RRR, BBB...), il reste 120 triplets.
- * On en tire 84 aléatoirement (42 symboles × 2 variantes).
+ * Génère automatiquement un alphabet selon le mode actif :
+ * - Mode 5 couleurs : 0 collision garantie (120 triplets disponibles pour 84 nécessaires)
+ * - Mode 4 couleurs : 60 triplets disponibles sans répétitions unies, 24 doublons inévitables
  */
 function generateUniqueAlphabet() {
+  const keys = getActiveColorKeys();
   const allTriplets = [];
 
-  for (const c1 of COLOR_KEYS) {
-    for (const c2 of COLOR_KEYS) {
-      for (const c3 of COLOR_KEYS) {
-        // Option esthétique : éviter les triplets 100% unis (ex: RRR, BBB...)
+  for (const c1 of keys) {
+    for (const c2 of keys) {
+      for (const c3 of keys) {
+        // Éviter les triplets 100% unis (RRR, BBB...)
         if (c1 === c2 && c2 === c3) continue;
         allTriplets.push([c1, c2, c3]);
       }
@@ -205,9 +280,17 @@ function generateUniqueAlphabet() {
     [allTriplets[i], allTriplets[j]] = [allTriplets[j], allTriplets[i]];
   }
 
+  const needed = ORDERED_SYMBOLS.length * 2; // 84
+  const selectedTriplets = [];
+
+  // En mode 4 couleurs (60 triplets dispo), on réutilise les triplets de façon équitable
+  for (let i = 0; i < needed; i++) {
+    selectedTriplets.push(allTriplets[i % allTriplets.length]);
+  }
+
   let idx = 0;
-  for (const char of Object.keys(currentCode)) {
-    currentCode[char] = [allTriplets[idx++], allTriplets[idx++]];
+  for (const char of ORDERED_SYMBOLS) {
+    currentCode[char] = [selectedTriplets[idx++], selectedTriplets[idx++]];
   }
 
   saveCodeToStorage();
@@ -215,16 +298,157 @@ function generateUniqueAlphabet() {
 }
 
 /**
- * Fait défiler la couleur d'une tuile au clic (R -> B -> V -> J -> W -> R)
+ * Fait défiler la couleur d'une tuile au clic selon les couleurs actives
  */
 function cycleTileColor(char, variantIndex, tileIndex) {
   const currentTileColor = currentCode[char][variantIndex][tileIndex];
-  const currentIdx = COLOR_KEYS.indexOf(currentTileColor);
-  const nextIdx = (currentIdx + 1) % COLOR_KEYS.length;
+  const keys = getActiveColorKeys();
+  const currentIdx = keys.indexOf(currentTileColor);
+  const nextIdx = currentIdx === -1 ? 0 : (currentIdx + 1) % keys.length;
 
-  currentCode[char][variantIndex][tileIndex] = COLOR_KEYS[nextIdx];
+  currentCode[char][variantIndex][tileIndex] = keys[nextIdx];
   saveCodeToStorage();
   render();
+}
+
+/**
+ * Sérialise l'alphabet sous forme d'une chaîne compacte de 252 caractères
+ */
+function serializeAlphabet(code) {
+  let str = '';
+  for (const sym of ORDERED_SYMBOLS) {
+    const variants = code[sym] || [['R', 'B', 'V'], ['J', 'R', 'B']];
+    str += variants[0].join('') + variants[1].join('');
+  }
+  return str;
+}
+
+/**
+ * Désérialise une chaîne compacte de 252 caractères en dictionnaire d'alphabet
+ */
+function deserializeAlphabet(str) {
+  if (!str || str.length !== ORDERED_SYMBOLS.length * 6) return null;
+  const newCode = {};
+  let idx = 0;
+  for (const sym of ORDERED_SYMBOLS) {
+    newCode[sym] = [
+      [str[idx], str[idx + 1], str[idx + 2]],
+      [str[idx + 3], str[idx + 4], str[idx + 5]],
+    ];
+    idx += 6;
+  }
+  return newCode;
+}
+
+/**
+ * Génère le lien complet de partage encodant toute la configuration
+ */
+function generateShareUrl() {
+  const msg = messageInput.value;
+  const w = largeurInput.value;
+  const h = hauteurInput.value;
+  const colors = getCurrentColors();
+  const keys = getActiveColorKeys();
+  const colStr = keys.map((k) => colors[k].replace('#', '')).join('_');
+  const alphaStr = serializeAlphabet(currentCode);
+
+  const params = new URLSearchParams();
+  params.set('msg', msg);
+  params.set('w', w);
+  params.set('h', h);
+  params.set('c', currentColorMode.toString());
+  params.set('col', colStr);
+  params.set('a', alphaStr);
+
+  return `${window.location.origin}${window.location.pathname}#${params.toString()}`;
+}
+
+/**
+ * Copie le lien de partage dans le presse-papier
+ */
+function copyShareUrl() {
+  const shareUrl = generateShareUrl();
+
+  // Mise à jour de l'URL dans la barre d'adresse sans recharger
+  history.replaceState(null, '', shareUrl);
+
+  function fallbackCopy(text) {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.style.position = 'fixed';
+    textarea.style.opacity = '0';
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    try {
+      document.execCommand('copy');
+      showToast('🔗 Lien de partage copié dans le presse-papier !');
+    } catch (e) {
+      prompt('Copiez ce lien pour partager la configuration :', text);
+    }
+    document.body.removeChild(textarea);
+  }
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      showToast('🔗 Lien de partage copié dans le presse-papier !');
+    }).catch(() => {
+      fallbackCopy(shareUrl);
+    });
+  } else {
+    fallbackCopy(shareUrl);
+  }
+}
+
+/**
+ * Charge une configuration depuis l'URL (hash ou search params)
+ */
+function loadConfigFromUrl() {
+  const hash = window.location.hash.startsWith('#') ? window.location.hash.substring(1) : '';
+  const search = window.location.search.startsWith('?') ? window.location.search.substring(1) : '';
+  const queryString = hash || search;
+
+  if (!queryString) return false;
+
+  const params = new URLSearchParams(queryString);
+  if (!params.has('msg') && !params.has('a') && !params.has('w')) return false;
+
+  try {
+    if (params.has('msg')) {
+      messageInput.value = params.get('msg');
+    }
+    if (params.has('w')) {
+      largeurInput.value = params.get('w');
+    }
+    if (params.has('h')) {
+      hauteurInput.value = params.get('h');
+    }
+    if (params.has('c')) {
+      const mode = parseInt(params.get('c'), 10) === 4 ? 4 : 5;
+      setColorMode(mode, false);
+    }
+    if (params.has('col')) {
+      const colParts = params.get('col').split('_');
+      const keys = getActiveColorKeys();
+      colParts.forEach((hex, idx) => {
+        if (idx < keys.length && colorInputs[keys[idx]]) {
+          colorInputs[keys[idx]].value = `#${hex}`;
+        }
+      });
+    }
+    if (params.has('a')) {
+      const deserialized = deserializeAlphabet(params.get('a'));
+      if (deserialized) {
+        currentCode = deserialized;
+        saveCodeToStorage();
+      }
+    }
+    showToast('✨ Configuration partagée chargée avec succès !', 4000);
+    return true;
+  } catch (e) {
+    console.warn('Erreur lors du décodage de la configuration URL', e);
+    return false;
+  }
 }
 
 /**
@@ -257,11 +481,10 @@ function importAlphabetJson(event) {
       currentCode = parsed;
       saveCodeToStorage();
       render();
-      alert('Alphabet importé avec succès !');
+      showToast('Alphabet importé avec succès !');
     } catch (err) {
       alert(`Erreur lors de l'import : ${err.message}`);
     }
-    // Réinitialiser le champ pour permettre de réimporter le même fichier
     importAlphabetFile.value = '';
   };
   reader.readAsText(file);
@@ -271,9 +494,10 @@ function importAlphabetJson(event) {
  * Met à jour le bruit aléatoire pour les cases décoratives restantes
  */
 function updateNoiseCache(neededCount) {
+  const keys = getActiveColorKeys();
   if (noiseColorsCache.length < neededCount) {
     while (noiseColorsCache.length < neededCount) {
-      const randomKey = COLOR_KEYS[Math.floor(Math.random() * COLOR_KEYS.length)];
+      const randomKey = keys[Math.floor(Math.random() * keys.length)];
       noiseColorsCache.push(randomKey);
     }
   }
@@ -307,6 +531,9 @@ function renderAlphabetTable(colors, currentMessage) {
   if (collisionCount === 0) {
     alphabetCollisionBadge.className = 'alphabet-status-badge badge-success';
     alphabetCollisionBadge.innerHTML = '✅ 0 doublon : tous les 84 triplets sont uniques';
+  } else if (currentColorMode === 4) {
+    alphabetCollisionBadge.className = 'alphabet-status-badge badge-danger';
+    alphabetCollisionBadge.innerHTML = `⚠️ ${collisionCount} doublon(s) (inévitable en 4 couleurs : 64 combinaisons max pour 84 variantes)`;
   } else {
     alphabetCollisionBadge.className = 'alphabet-status-badge badge-danger';
     alphabetCollisionBadge.innerHTML = `⚠️ ${collisionCount} doublon(s) détecté(s)`;
@@ -356,7 +583,7 @@ function renderAlphabetTable(colors, currentMessage) {
         tile.style.backgroundColor = colors[colorCode] || '#ccc';
         tile.style.color = getContrastTextColor(colorCode);
         tile.textContent = colorCode;
-        tile.title = `Couleur : ${colorCode} — Cliquer pour faire défiler (R, B, V, J, W)`;
+        tile.title = `Couleur : ${colorCode} — Cliquer pour changer`;
         tile.addEventListener('click', (e) => {
           e.stopPropagation();
           cycleTileColor(char, vIdx, tIdx);
@@ -396,35 +623,27 @@ function updateCapacityIndicator(messageLen, validCharsCount, totalTiles, capaci
     capacityAlert.className = 'alert alert-warning';
     capacityAlert.innerHTML = `
       <span class="alert-icon">ℹ️</span>
-      <div>
-        <strong>Aucun message encodé :</strong> La crédence sera entièrement remplie d'un motif décoratif parmi vos 5 couleurs.
-      </div>
+      <div>Aucun message encodé : la crédence est un motif décoratif aléatoire.</div>
     `;
   } else if (tilesNeeded > totalTiles) {
     const overflowChars = validCharsCount - capacity;
     capacityAlert.className = 'alert alert-danger';
     capacityAlert.innerHTML = `
       <span class="alert-icon">⚠️</span>
-      <div>
-        <strong>Message trop long :</strong> Nécessite <strong>${tilesNeeded} carreaux</strong> (${validCharsCount} caractères × 3), or la crédence n'en possède que <strong>${totalTiles}</strong> (capacité maximale : <strong>${capacity} caractères</strong>). Les ${overflowChars} dernier(s) caractère(s) seront tronqués.
-      </div>
+      <div>Message trop long : ${tilesNeeded} carreaux requis pour ${totalTiles} disponibles (${overflowChars} caractère(s) tronqué(s)).</div>
     `;
   } else if (tilesNeeded < totalTiles) {
     const remainingTiles = totalTiles - tilesNeeded;
     capacityAlert.className = 'alert alert-warning';
     capacityAlert.innerHTML = `
       <span class="alert-icon">ℹ️</span>
-      <div>
-        <strong>Message plus court que la crédence :</strong> Le message utilise <strong>${tilesNeeded} carreaux</strong> sur <strong>${totalTiles}</strong> disponibles. Les <strong>${remainingTiles} carreaux restants</strong> sont complétés aléatoirement avec vos 5 couleurs.
-      </div>
+      <div>${tilesNeeded} carreaux utilisés sur ${totalTiles} (${remainingTiles} carreaux décoratifs aléatoires).</div>
     `;
   } else {
     capacityAlert.className = 'alert alert-success';
     capacityAlert.innerHTML = `
       <span class="alert-icon">✅</span>
-      <div>
-        <strong>Format idéal :</strong> Le message remplit exactement l'intégralité des <strong>${totalTiles} carreaux</strong> de la crédence (${validCharsCount} caractères × 3) !
-      </div>
+      <div>Format idéal : le message remplit exactement les ${totalTiles} carreaux (${validCharsCount} caractères × 3) !</div>
     `;
   }
 
@@ -448,6 +667,7 @@ function render() {
   const colors = getCurrentColors();
   const totalTiles = largeur * hauteur;
   const capacity = Math.floor(totalTiles / 3);
+  const activeKeys = getActiveColorKeys();
 
   // Filtrer les caractères valides
   const validChars = [];
@@ -495,7 +715,7 @@ function render() {
       colorKey = trio[i % 3];
     } else {
       const noiseIndex = i - tilesForMessage;
-      colorKey = noiseColorsCache[noiseIndex] || 'W';
+      colorKey = noiseColorsCache[noiseIndex] || activeKeys[0];
     }
 
     const fillHex = colors[colorKey] || '#999';
@@ -504,7 +724,7 @@ function render() {
     rectsSvg += `<rect x="${x}" y="${y}" width="${tailleCarreau}" height="${tailleCarreau}" fill="${fillHex}" stroke="#0f172a" stroke-width="0.8"/>`;
   }
 
-  // Affichage du compteur de chaque couleur
+  // Affichage du compteur de chaque couleur active
   const colorNames = {
     'R': 'Rouge (R)',
     'B': 'Bleu (B)',
@@ -513,7 +733,7 @@ function render() {
     'W': 'Blanc (W)',
   };
 
-  colorCountsContainer.innerHTML = Object.keys(DEFAULT_COLORS).map((key) => {
+  colorCountsContainer.innerHTML = activeKeys.map((key) => {
     const count = colorCounts[key] || 0;
     const pct = totalTiles > 0 ? Math.round((count / totalTiles) * 100) : 0;
     return `
@@ -642,7 +862,6 @@ function exportCredence(format) {
     canvas.height = h;
     const ctx = canvas.getContext('2d');
 
-    // Fond blanc
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, w, h);
     ctx.drawImage(img, 0, 0, w, h);
@@ -668,12 +887,10 @@ function exportCredence(format) {
 function exportAlphabet(format) {
   const colors = getCurrentColors();
   const canvas = document.createElement('canvas');
-  // Format A4 portrait à 150 DPI
   canvas.width = 1240;
   canvas.height = 1754;
   const ctx = canvas.getContext('2d');
 
-  // Fond blanc
   ctx.fillStyle = '#ffffff';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -685,28 +902,29 @@ function exportAlphabet(format) {
 
   ctx.fillStyle = '#475569';
   ctx.font = '15px sans-serif';
-  ctx.fillText('Chaque symbole possède 2 variantes de triplets (3 carreaux colorés)', 50, 95);
+  ctx.fillText(`Mode ${currentColorMode} couleurs — Chaque symbole possède 2 variantes de triplets (3 carreaux colorés)`, 50, 95);
 
-  // Légende des 5 couleurs
-  const colorLegend = [
-    { key: 'R', label: 'Rouge (R)', hex: colors['R'] },
-    { key: 'B', label: 'Bleu (B)', hex: colors['B'] },
-    { key: 'V', label: 'Vert (V)', hex: colors['V'] },
-    { key: 'J', label: 'Jaune (J)', hex: colors['J'] },
-    { key: 'W', label: 'Blanc (W)', hex: colors['W'] },
-  ];
+  // Légende des couleurs actives
+  const activeKeys = getActiveColorKeys();
+  const allLabels = {
+    'R': 'Rouge (R)',
+    'B': 'Bleu (B)',
+    'V': 'Vert (V)',
+    'J': 'Jaune (J)',
+    'W': 'Blanc (W)',
+  };
 
   let legendX = 50;
   ctx.font = '13px sans-serif';
-  colorLegend.forEach((item) => {
-    ctx.fillStyle = item.hex;
+  activeKeys.forEach((k) => {
+    ctx.fillStyle = colors[k];
     ctx.fillRect(legendX, 115, 18, 18);
     ctx.strokeStyle = 'rgba(0,0,0,0.4)';
     ctx.lineWidth = 1;
     ctx.strokeRect(legendX, 115, 18, 18);
 
     ctx.fillStyle = '#0f172a';
-    ctx.fillText(item.label, legendX + 26, 129);
+    ctx.fillText(allLabels[k], legendX + 26, 129);
     legendX += 160;
   });
 
@@ -719,7 +937,7 @@ function exportAlphabet(format) {
   ctx.stroke();
 
   // Grille des 42 symboles (6 colonnes × 7 lignes)
-  const symbols = Object.keys(currentCode);
+  const symbols = ORDERED_SYMBOLS;
   const colWidth = 190;
   const rowHeight = 210;
   const startX = 50;
@@ -813,6 +1031,14 @@ function exportAlphabet(format) {
   }
 }
 
+// Écouteurs d'événements pour le mode 4 ou 5 couleurs
+modeButtons.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const mode = parseInt(btn.dataset.mode, 10);
+    setColorMode(mode, true);
+  });
+});
+
 // Écouteurs d'événements pour la mise à jour en temps réel
 [messageInput, largeurInput, hauteurInput].forEach((input) => {
   input.addEventListener('input', render);
@@ -827,6 +1053,7 @@ alphabetSearchInput.addEventListener('input', () => {
 });
 
 btnRerollNoise.addEventListener('click', rerollAllRandomness);
+btnShareConfig.addEventListener('click', copyShareUrl);
 btnDownloadPng.addEventListener('click', () => exportCredence('png'));
 btnDownloadPdf.addEventListener('click', () => exportCredence('pdf'));
 btnGenerateUniqueAlphabet.addEventListener('click', generateUniqueAlphabet);
@@ -844,5 +1071,9 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// Initialisation au chargement
+// Initialisation au chargement (vérification de configuration partagée dans l'URL)
+const loadedFromUrl = loadConfigFromUrl();
+if (!loadedFromUrl) {
+  setColorMode(currentColorMode, false);
+}
 rerollAllRandomness();
